@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+        {% block title %}
+            Todo Application
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="container">
+        <p>
+        </p>
+      </div>
+    </div>
+    <div class="col-sm-7">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="panel panel-default text-left">
+              <div class="panel-body">
+                <h3 style="text-align: center; color: blue" contenteditable="true">Make your own to-do list!</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <u style="color: gold"> <h1 style="color: gold"> List of todo's </h1></u>
+
+        <div class="row">
+          <div class="col-sm-9">
+          {% for todo in list_todo %}
+            {% if not todo.status %}
+                <div class="well">
+                    <h3><b> {{ todo.name }}</b></h3>
+                    <p style="color: red; size: 6px" > Created at: {{ todo.created_at }}</p>
+                  <a style="size: 4px; color:green" href="{% url 'mark_as_done' todo.id  %}">Mark as Done  &#9996;</a>
+                </div>
+            {% endif %}
+          {% endfor %}
+          </div>
+        </div>
+
+        <h3 style="color:navy">
+          Create a new task
+        </h3>
+      </div>
+
+        <div class="col-sm-9">
+          <div class="well">
+            <form method="POST" action="{% url 'new_todo' %}" id="input-text" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="textarea" style="width: 450px;" name="todo-name">
+              <button type="submit" value="Submit" class="btn btn-primary">Create! </button>
+            </form>
+          </div>
+        </div>
+
+
+    <div class="row">
+      <button onclick="myFunction()">Dark mode on!</button>
+    </div>
+
+
+  </div>
+  </div>
+</div>
+</body>
+
+<style>
+body {
+  background-color: white;
+  color: black;
+}
+.dark-mode {
+  background-color: black;
+  color: black;
+}
+</style>
+
+<script>
+  function myFunction() {
+  var element = document.body;
+  element.classList.toggle("dark-mode");
+  }
+</script>
+</html>
